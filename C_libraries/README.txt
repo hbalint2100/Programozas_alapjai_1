@@ -15,5 +15,12 @@ Ha értéket akarsz "lekérni" akkor azt az int_get(p,//elem indexe ugyanúgy mi
 Ha a lista méretét akarod meghatározni akkor azt a size(p); függvénnyel tudod.
 Ha értéket akarsz módosítani egy x indexű elemen akkor azt az int_set(p,//x. index,//új int érték); függvénnyel tudod.
 Ha törölni akarsz egy x. indexű elemet, akkor azt az list_remove(&p,//x. index); függvénnyel tudod.
-Ha meg akarod kapni az x.indexű elemet, akkor azt a get_node(p,//x. index) függvénnyel tudod.
+Ha meg akarod kapni az x.indexű elemet, akkor azt a get_node(p,//x. index);(Node_i pointert ad vissza) függvénnyel tudod.
 Ha törölni akarod a teljes listát, akkor azt a free_list(p); függvénnyel tudod.
+
+struktúra:
+typedef struct int_node
+{
+    int data;
+    struct int_node *next;
+} Node_i;
