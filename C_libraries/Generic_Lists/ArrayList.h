@@ -1,12 +1,12 @@
-#ifndef HuList_S
-#define HuList_S
+#ifndef HuList_A
+#define HuList_A
 #include<stdlib.h>
 
 typedef struct ArrayList
 {
     void **array;
-    unsigned int nitems;
-    size_t size;
+    unsigned int size;
+    size_t allocation;
     size_t sizeofElement;
 } ArrayList;
 

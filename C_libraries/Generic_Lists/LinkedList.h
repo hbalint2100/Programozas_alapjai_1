@@ -1,5 +1,5 @@
-#ifndef HuList_S
-#define HuList_S
+#ifndef HuList_L
+#define HuList_L
 #include<stdlib.h>
 
 typedef struct node
@@ -7,16 +7,16 @@ typedef struct node
     void *data;
     struct node *prev;
     struct node *next;
-    
 } Node;
 
 typedef struct LinkedList
 {
     Node *head;
     Node *tail;
-    size_t size;
-    unsigned int nitems;
+    size_t sizeofElement;
+    unsigned int size;
 } LinkedList;
+
 
 LinkedList createLinkedList(size_t sizeofElement);
 void add_value(LinkedList *LinkedList,void *data,size_t sizeofData);

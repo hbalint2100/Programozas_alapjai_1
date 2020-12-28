@@ -26,8 +26,8 @@ typedef struct LinkedList
 {
     Node *head;
     Node *tail;
-    size_t size;
-    unsigned int nitems;
+    size_t sizeofElement;
+    unsigned int size;
 } LinkedList;
 
 //creates empty LinkedList(for any data type)
@@ -45,7 +45,7 @@ LinkedList createLinkedList(size_t sizeofElement)
 //add new element(value) to the end of the LinkedList (generic type)
 void add_value(LinkedList *LinkedList,void *data,size_t sizeofData)
 {
-    if(!LinkedList->head||!LinkedList->tail||LinkedList->tail->next||LinkedList->head->prev||sizeofData!=LinkedList->size)
+    if(!LinkedList->head||!LinkedList->tail||LinkedList->tail->next||LinkedList->head->prev||sizeofData!=LinkedList->sizeofElement)
     {
         return;
     }
@@ -60,7 +60,7 @@ void add_value(LinkedList *LinkedList,void *data,size_t sizeofData)
     {
         *(char *)(new->data + i) = *(char *)(data + i);
     }
-    LinkedList->nitems += 1;
+    LinkedList->size += 1;
 }
 //add a previously allocated data to the end of the LinkedList(generic type)
 void add_data(LinkedList *LinkedList,void *data)
@@ -75,13 +75,13 @@ void add_data(LinkedList *LinkedList,void *data)
     LinkedList->tail->prev->next = new;
     LinkedList->tail->prev = new;
     new->data = data;
-    LinkedList->nitems += 1;
+    LinkedList->size += 1;
 }
 
 //clears LinkedList
 void empty_LinkedList(LinkedList *LinkedList)
 {
-    if(!LinkedList->nitems)
+    if(!LinkedList->size)
     {
         return;
     }
@@ -97,7 +97,7 @@ void empty_LinkedList(LinkedList *LinkedList)
     }
     tail->prev = LinkedList->head;
     LinkedList->head->next = tail;
-    LinkedList->nitems = 0;
+    LinkedList->size = 0;
 }
 
 //destroys the whole LinkedList
@@ -109,7 +109,7 @@ void free_LinkedList(LinkedList *LinkedList)
         return;
     }
     //LinkedList is an empty LinkedList -> free up head and tail
-    else if(!LinkedList->nitems)
+    else if(!LinkedList->size)
     {
         free(LinkedList->tail);
         free(LinkedList->head);
@@ -129,7 +129,7 @@ void free_LinkedList(LinkedList *LinkedList)
     }
     free(tail);
     free(LinkedList->head);
-    LinkedList->nitems = 0;
+    LinkedList->size = 0;
     LinkedList->head=NULL;
     LinkedList->tail=NULL;
 }
@@ -138,15 +138,15 @@ void free_LinkedList(LinkedList *LinkedList)
 void *get(LinkedList LinkedList,int index)
 {   
     //exits if non existing LinkedList or empty LinkedList or index out of bounds occurs
-    if(!LinkedList.head||!LinkedList.tail||!LinkedList.nitems||LinkedList.nitems<=index)
+    if(!LinkedList.head||!LinkedList.tail||!LinkedList.size||LinkedList.size<=index)
     {
         return NULL;
     }
     //search from tail
-    if(((LinkedList.nitems/2)-1)>index)
+    if(((LinkedList.size/2)-1)>index)
     {
         Node *current = LinkedList.tail->prev;
-        for(int i = LinkedList.nitems-1; i >= 0; i--)
+        for(int i = LinkedList.size-1; i >= 0; i--)
         {
             if(i==index)
             {
@@ -159,7 +159,7 @@ void *get(LinkedList LinkedList,int index)
     else
     {
         Node *current = LinkedList.head->next;
-        for(int i = 0; i < LinkedList.nitems; i++)
+        for(int i = 0; i < LinkedList.size; i++)
         {
             if(i==index)
             {
@@ -176,15 +176,15 @@ void *get(LinkedList LinkedList,int index)
 void LinkedList_remove(LinkedList *LinkedList, int index)
 {
     //exits if non existing LinkedList or empty LinkedList or index out of bounds occurs
-    if(!LinkedList->head||!LinkedList->tail||!LinkedList->nitems||LinkedList->nitems<=index)
+    if(!LinkedList->head||!LinkedList->tail||!LinkedList->size||LinkedList->size<=index)
     {
         return;
     }
     //search from tail
-    if(((LinkedList->nitems/2)-1)>index)
+    if(((LinkedList->size/2)-1)>index)
     {
         Node *current = LinkedList->tail->prev;
-        for(int i = LinkedList->nitems-1; i >= 0; i--)
+        for(int i = LinkedList->size-1; i >= 0; i--)
         {
             if(i==index)
             {
@@ -193,7 +193,7 @@ void LinkedList_remove(LinkedList *LinkedList, int index)
                 current->prev->next = current->next;
                 current->next->prev = current->prev;
                 free(current);
-                LinkedList->nitems -= 1;
+                LinkedList->size -= 1;
                 return;
             }
             current = current->prev;
@@ -203,7 +203,7 @@ void LinkedList_remove(LinkedList *LinkedList, int index)
     else
     {
         Node *current = LinkedList->head->next;
-        for(int i = 0; i < LinkedList->nitems; i++)
+        for(int i = 0; i < LinkedList->size; i++)
         {
             if(i==index)
             {
@@ -212,7 +212,7 @@ void LinkedList_remove(LinkedList *LinkedList, int index)
                 current->prev->next = current->next;
                 current->next->prev = current->prev;
                 free(current);
-                LinkedList->nitems -= 1;
+                LinkedList->size -= 1;
                 return;
             }
             current = current->next;
